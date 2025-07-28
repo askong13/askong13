@@ -1,109 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storapedia - Modern Digital Storage Booking</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Storapedia - Sistem Booking Storage Modern</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <script type="text/javascript"
       src="https://app.sandbox.midtrans.com/snap/snap.js"
       data-client-key="YOUR_MIDTRANS_CLIENT_KEY"></script>
+
+    <style>
+        :root {
+            --primary-color: #00A6FB;
+            --secondary-color: #0582CA;
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-radius: 0.5rem;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--card-bg) !important;
+            box-shadow: var(--shadow);
+        }
+
+        .main-container {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card-booking {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: none;
+            padding: 2.5rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 166, 251, 0.25);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-google {
+            background-color: #fff;
+            color: #444;
+            border: 1px solid #ddd;
+            font-weight: 500;
+        }
+
+        .btn-check:checked+.btn-outline-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .map-container, .dashboard-container {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+            border-radius: var(--border-radius);
+        }
+        
+        #userDashboard { display: none; }
+
+        .footer {
+            background-color: #e9ecef;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="https://via.placeholder.com/150x50?text=Storapedia" alt="Storapedia Logo" id="siteLogo" style="height: 40px;">
-            </a>
-            <div id="userAuthSection">
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="https://via.placeholder.com/150x40?text=Storapedia" alt="Storapedia Logo" id="siteLogo" style="height: 40px;">
+                </a>
+                <div id="userAuthSection">
+                    <button class="btn btn-light" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                 </div>
-        </div>
-    </nav>
+            </div>
+        </nav>
+    </header>
 
-    <div class="container mt-5">
-        <div class="row">
+    <main class="container main-container">
+        <div class="row g-4">
             <div class="col-lg-7">
-                <h2>Book Your Storage Unit</h2>
-                <p>Fast, secure, and modern. Book without logging in.</p>
-                <form id="bookingForm">
-                    <div class="mb-3">
-                        <label for="userName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="userName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="userEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userPhone" class="form-label">Phone Number</label>
-                        <input type="tel" class="form-control" id="userPhone" required>
-                    </div>
+                <div class="card-booking">
+                    <h1 class="mb-2 h2">Sewa Ruang Penyimpanan</h1>
+                    <p class="text-muted mb-4">Cepat, aman, dan modern. Booking tanpa perlu login.</p>
+                    
+                    <form id="bookingForm" novalidate>
+                        <div class="mb-3">
+                            <label for="userName" class="form-label fw-bold">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="userName" placeholder="Contoh: Budi Sanjaya" required>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="userEmail" class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control" id="userEmail" placeholder="email@anda.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="userPhone" class="form-label fw-bold">No. Handphone</label>
+                                <input type="tel" class="form-control" id="userPhone" placeholder="08123456xxxx" required>
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="storageLocation" class="form-label">Select Location</label>
-                        <select class="form-select" id="storageLocation" required>
+                        <hr class="my-4">
+
+                        <div class="mb-3">
+                            <label for="storageLocation" class="form-label fw-bold">Pilih Lokasi</label>
+                            <select class="form-select" id="storageLocation" required>
+                                <option>Memuat lokasi...</option>
                             </select>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="bookingDate" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="bookingDate" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="bookingDuration" class="form-label">Duration (in days)</label>
-                            <input type="number" class="form-control" id="bookingDuration" value="30" required>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="bookingDate" class="form-label fw-bold">Tanggal Mulai</label>
+                                <input type="date" class="form-control" id="bookingDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bookingDuration" class="form-label fw-bold">Durasi (hari)</label>
+                                <input type="number" class="form-control" id="bookingDuration" value="30" min="1" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Service Type</label>
-                        <div>
-                            <input type="radio" class="btn-check" name="serviceType" id="pickup" value="Pickup" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="pickup">Pickup Service</label>
-                            <input type="radio" class="btn-check" name="serviceType" id="dropoff" value="Drop-off" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="dropoff">Drop-off at Location</label>
-                        </div>
-                    </div>
-                     <div class="mb-3">
-                        <label class="form-label">Payment Method</label>
-                        <div>
-                            <input type="radio" class="btn-check" name="paymentMethod" id="cod" value="COD" autocomplete="off" checked>
-                            <label class="btn btn-outline-success" for="cod">Pay at Location (COD)</label>
-                            <input type="radio" class="btn-check" name="paymentMethod" id="midtrans" value="Midtrans" autocomplete="off">
-                            <label class="btn btn-outline-success" for="midtrans">Online (Midtrans)</label>
-                        </div>
-                    </div>
+                        <hr class="my-4">
 
-                    <div class="mb-3">
-                        <label for="promoCode" class="form-label">Promo Code (Optional)</label>
-                        <input type="text" class="form-control" id="promoCode">
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Jenis Layanan</label>
+                            <div class="d-flex gap-2">
+                                <input type="radio" class="btn-check" name="serviceType" id="pickup" value="Pickup" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary w-100" for="pickup"><i class="bi bi-truck"></i> Minta Jemput</label>
+                                <input type="radio" class="btn-check" name="serviceType" id="dropoff" value="Drop-off" autocomplete="off">
+                                <label class="btn btn-outline-primary w-100" for="dropoff"><i class="bi bi-box-seam"></i> Antar Sendiri</label>
+                            </div>
+                        </div>
+                         <div class="mb-4">
+                            <label class="form-label fw-bold">Metode Pembayaran</label>
+                            <div class="d-flex gap-2">
+                                <input type="radio" class="btn-check" name="paymentMethod" id="cod" value="COD" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary w-100" for="cod"><i class="bi bi-cash-coin"></i> Bayar di Tempat</label>
+                                <input type="radio" class="btn-check" name="paymentMethod" id="midtrans" value="Midtrans" autocomplete="off">
+                                <label class="btn btn-outline-primary w-100" for="midtrans"><i class="bi bi-credit-card"></i> Bayar Online</label>
+                            </div>
+                        </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
-                </form>
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
+                            <i class="bi bi-check2-circle"></i> Konfirmasi Booking
+                        </button>
+                    </form>
+                </div>
             </div>
+
             <div class="col-lg-5">
-                <h4>Our Locations</h4>
-                <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
-                 <div id="userDashboard" class="mt-4" style="display:none;">
-                    <h3>My Bookings</h3>
-                    <ul id="bookingList" class="list-group">
+                <div class="d-flex flex-column gap-4">
+                    <div class="map-container">
+                        <h3 class="h5 mb-3">Lokasi Kami</h3>
+                        <div id="map">
+                            </div>
+                    </div>
+                    <div id="userDashboard" class="dashboard-container">
+                        <h3 class="h5 mb-3">Booking Saya</h3>
+                        <ul id="bookingList" class="list-group list-group-flush">
+                            <li class="list-group-item text-center">Silakan login untuk melihat riwayat booking Anda.</li>
                         </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <footer class="text-center py-4 mt-5 bg-light">
-        <p id="footerText">&copy; 2024 Storapedia. All Rights Reserved.</p>
+    <footer class="footer text-center">
+        <div class="container">
+            <p id="footerText" class="mb-0 text-muted">&copy; 2025 Storapedia. Seluruh Hak Cipta.</p>
+        </div>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="js/firebase.js"></script>
     <script src="js/maps.js"></script>
@@ -111,7 +236,7 @@
     <script src="js/invoice.js"></script>
     <script src="js/booking.js"></script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_Maps_API_KEY&callback=initMap"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_Maps_API_KEY&callback=initMap"></script>
+
 </body>
 </html>
