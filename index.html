@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storapedia - Modern Digital Storage Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="YOUR_MIDTRANS_CLIENT_KEY"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://via.placeholder.com/150x50?text=Storapedia" alt="Storapedia Logo" id="siteLogo" style="height: 40px;">
+            </a>
+            <div id="userAuthSection">
+                </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-7">
+                <h2>Book Your Storage Unit</h2>
+                <p>Fast, secure, and modern. Book without logging in.</p>
+                <form id="bookingForm">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="userName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="userEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userPhone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="userPhone" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="storageLocation" class="form-label">Select Location</label>
+                        <select class="form-select" id="storageLocation" required>
+                            </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="bookingDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="bookingDate" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="bookingDuration" class="form-label">Duration (in days)</label>
+                            <input type="number" class="form-control" id="bookingDuration" value="30" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Service Type</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="serviceType" id="pickup" value="Pickup" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="pickup">Pickup Service</label>
+                            <input type="radio" class="btn-check" name="serviceType" id="dropoff" value="Drop-off" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="dropoff">Drop-off at Location</label>
+                        </div>
+                    </div>
+                     <div class="mb-3">
+                        <label class="form-label">Payment Method</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="paymentMethod" id="cod" value="COD" autocomplete="off" checked>
+                            <label class="btn btn-outline-success" for="cod">Pay at Location (COD)</label>
+                            <input type="radio" class="btn-check" name="paymentMethod" id="midtrans" value="Midtrans" autocomplete="off">
+                            <label class="btn btn-outline-success" for="midtrans">Online (Midtrans)</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="promoCode" class="form-label">Promo Code (Optional)</label>
+                        <input type="text" class="form-control" id="promoCode">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+                </form>
+            </div>
+            <div class="col-lg-5">
+                <h4>Our Locations</h4>
+                <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
+                 <div id="userDashboard" class="mt-4" style="display:none;">
+                    <h3>My Bookings</h3>
+                    <ul id="bookingList" class="list-group">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4 mt-5 bg-light">
+        <p id="footerText">&copy; 2024 Storapedia. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/maps.js"></script>
+    <script src="js/midtrans.js"></script>
+    <script src="js/invoice.js"></script>
+    <script src="js/booking.js"></script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_Maps_API_KEY&callback=initMap"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</body>
+</html>
